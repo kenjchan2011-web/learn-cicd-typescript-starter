@@ -18,8 +18,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install vitest
-        run: npm i -D @vitest/coverage-v8
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22  # Update this from 18 to 22
         
       - name: Install dependencies
         run:  npm ci
