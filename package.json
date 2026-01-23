@@ -24,7 +24,7 @@
     "@types/node": "^22.9.0",
     "@vitest/coverage-v8": "^4.0.17",
     "@vitest/ui": "^4.0.17",
-    "drizzle-kit": "^0.31.8",
+    "drizzle-kit": "^0.18.1",
     "eslint": "^9.39.2",
     "eslint-plugin-security": "^3.0.1",
     "globals": "^15.15.0",
