@@ -28,8 +28,8 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
       with:
-        version: '>= 363.0.0' # Or 'latest'
-        project_id: '${{ secrets.notely-485406 }}'
+        version: 'latest'
+        project_id: 'notely-485406'
 
     # Step 3: Configure Docker to use gcloud as a credential helper
     - name: 'Docker Auth'
