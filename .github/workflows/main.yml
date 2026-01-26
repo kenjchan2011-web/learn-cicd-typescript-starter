@@ -39,5 +39,5 @@ jobs:
     # Step 4: Build and Push the Docker image
     - name: 'Build and Push Container'
       run: |-
-          docker build -t us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/notely-ar-repo/my-app:${{ github.sha }} .
-          docker push us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/notely-ar-repo/my-app:${{ github.sha }}
+          docker build -t us-central1-docker.pkg.dev/notely-485406/notely-ar-repo/my-app:${{ github.sha }} .
+          docker push us-central1-docker.pkg.dev/notely-485406/notely-ar-repo/my-app:${{ github.sha }}
