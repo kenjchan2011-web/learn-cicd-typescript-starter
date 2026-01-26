@@ -1,31 +1,40 @@
-steps:
-  - name: 'Checkout'
-    uses: 'actions/checkout@v4'
+name: Build and Push to Artifact Registry
+
+on:
+  push:
+    branches: [ "main" ] # mainブランチにpushされたら実行
+
+jobs:
+  deploy: # 任意のジョブ名
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout'
+      uses: 'actions/checkout@v4'
   
-  - name: 'Build the app'
-    run: npm run build
+    - name: 'Build the app'
+      run: npm run build
 
-    # Step 1: Authenticate with GCP
-  - id: 'auth'
-    name: 'Authenticate to Google Cloud'
-    uses: 'google-github-actions/auth@v2'
-    with:
-      credentials_json: '${{ secrets.GCP_CREDENTIALS }}' # The secret you just created
+      # Step 1: Authenticate with GCP
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}' # The secret you just created
 
-    # Step 2: Set up the gcloud CLI
-  - name: 'Set up Cloud SDK'
-    uses: 'google-github-actions/setup-gcloud@v2'
-    with:
-      version: '>= 363.0.0' # Or 'latest'
-      project_id: '${{ secrets.notely-485406 }}'
+      # Step 2: Set up the gcloud CLI
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+      with:
+        version: '>= 363.0.0' # Or 'latest'
+        project_id: '${{ secrets.notely-485406 }}'
 
-  # Step 3: Configure Docker to use gcloud as a credential helper
-  - name: 'Docker Auth'
-    run: |-
-        gcloud auth configure-docker us-central1-docker.pkg.dev
+    # Step 3: Configure Docker to use gcloud as a credential helper
+    - name: 'Docker Auth'
+      run: |-
+          gcloud auth configure-docker us-central1-docker.pkg.dev
 
-  # Step 4: Build and Push the Docker image
-  - name: 'Build and Push Container'
-    run: |-
-        docker build -t us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/my-repo/my-app:${{ github.sha }} .
-        docker push us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/my-repo/my-app:${{ github.sha }}
+    # Step 4: Build and Push the Docker image
+    - name: 'Build and Push Container'
+      run: |-
+          docker build -t us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/my-repo/my-app:${{ github.sha }} .
+          docker push us-central1-docker.pkg.dev/${{ secrets.notely-485406 }}/my-repo/my-app:${{ github.sha }}
